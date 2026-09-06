@@ -13,13 +13,27 @@ class QuizScreen extends StatefulWidget {
 class _QuizScreenState extends State<QuizScreen> {
   int currentQuestionIndex = 0;
 
-  final Map<String, int> studentScores = {};
+  final List<QuizAnswer?> selectedAnswers = List<QuizAnswer?>.filled(
+    quizQuestions.length,
+    null,
+  );
+
+  Map<String, int> get studentScores {
+    final scores = <String, int>{};
+
+    for (final answer in selectedAnswers) {
+      if (answer == null) continue;
+
+      for (final entry in answer.scores.entries) {
+        scores[entry.key] = (scores[entry.key] ?? 0) + entry.value;
+      }
+    }
+
+    return scores;
+  }
 
   void _answerQuestion(QuizAnswer selectedAnswer) {
-    // Add selected answer scores to total student scores.
-    selectedAnswer.scores.forEach((category, points) {
-      studentScores[category] = (studentScores[category] ?? 0) + points;
-    });
+    selectedAnswers[currentQuestionIndex] = selectedAnswer;
 
     final bool isLastQuestion =
         currentQuestionIndex == quizQuestions.length - 1;
@@ -38,56 +52,81 @@ class _QuizScreenState extends State<QuizScreen> {
     }
   }
 
+  void _goBack() {
+    if (currentQuestionIndex == 0) {
+      Navigator.pop(context);
+      return;
+    }
+
+    setState(() {
+      currentQuestionIndex--;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final QuizQuestion currentQuestion = quizQuestions[currentQuestionIndex];
 
     final double progress = (currentQuestionIndex + 1) / quizQuestions.length;
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Career Quiz')),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            LinearProgressIndicator(value: progress),
+    return PopScope(
+      canPop: currentQuestionIndex == 0,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          _goBack();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Career Quiz'),
+          leading: BackButton(onPressed: _goBack),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              LinearProgressIndicator(value: progress),
 
-            const SizedBox(height: 24),
+              const SizedBox(height: 24),
 
-            Text(
-              'Question ${currentQuestionIndex + 1} of ${quizQuestions.length}',
-              style: const TextStyle(fontSize: 16, color: Colors.grey),
-            ),
+              Text(
+                'Question ${currentQuestionIndex + 1} of ${quizQuestions.length}',
+                style: const TextStyle(fontSize: 16, color: Colors.grey),
+              ),
 
-            const SizedBox(height: 12),
+              const SizedBox(height: 12),
 
-            Text(
-              currentQuestion.questionText,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-
-            const SizedBox(height: 24),
-
-            for (final answer in currentQuestion.answers)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 12),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton(
-                    onPressed: () => _answerQuestion(answer),
-                    child: Text(answer.text, textAlign: TextAlign.center),
-                  ),
+              Text(
+                currentQuestion.questionText,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
 
-            const Spacer(),
+              const SizedBox(height: 24),
 
-            Text(
-              'Current scores: $studentScores',
-              style: const TextStyle(fontSize: 12, color: Colors.grey),
-            ),
-          ],
+              for (final answer in currentQuestion.answers)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton(
+                      onPressed: () => _answerQuestion(answer),
+                      child: Text(answer.text, textAlign: TextAlign.center),
+                    ),
+                  ),
+                ),
+
+              const Spacer(),
+
+              Text(
+                'Current scores: $studentScores',
+                style: const TextStyle(fontSize: 12, color: Colors.grey),
+              ),
+            ],
+          ),
         ),
       ),
     );
