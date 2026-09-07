@@ -34,7 +34,14 @@ class _QuizScreenState extends State<QuizScreen> {
   );
 
   Map<String, int> get studentScores {
-    final scores = <String, int>{};
+    final scores = <String, int>{
+      'R': 0,
+      'I': 0,
+      'A': 0,
+      'S': 0,
+      'E': 0,
+      'C': 0,
+    };
 
     for (final answer in selectedAnswers) {
       if (answer == null) continue;

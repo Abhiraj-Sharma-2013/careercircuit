@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../data/career_data.dart';
 import '../engine/career_matcher.dart';
+import '../engine/riasec_engine.dart';
 import '../models/career.dart';
 import '../models/student_intake.dart';
 import 'career_detail_screen.dart';
@@ -35,6 +36,7 @@ class ResultsScreen extends StatelessWidget {
       matchedCareers,
       studentScores,
     );
+    final String hollandCode = RiasecEngine.hollandCode(studentScores);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Your Career Matches')),
@@ -91,8 +93,23 @@ class ResultsScreen extends StatelessWidget {
 
           const SizedBox(height: 16),
 
+          Text(
+            'Your RIASEC profile: $hollandCode',
+            style: const TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF123B63),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            RiasecEngine.summary(studentScores),
+            style: const TextStyle(fontSize: 16),
+          ),
+          const SizedBox(height: 16),
+
           const Text(
-            'These careers were chosen by comparing your quiz answers with career interest tags.',
+            'These careers were chosen by comparing your RIASEC interests with career profiles.',
             style: TextStyle(fontSize: 16),
           ),
 
@@ -109,7 +126,7 @@ class ResultsScreen extends StatelessWidget {
           const SizedBox(height: 24),
 
           const Text(
-            'Your Interest Scores',
+            'Your RIASEC Scores',
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
 
@@ -117,7 +134,7 @@ class ResultsScreen extends StatelessWidget {
 
           for (final entry in studentScores.entries)
             Text(
-              '${entry.key}: ${entry.value}',
+              '${RiasecEngine.labels[entry.key]} (${entry.key}): ${entry.value}',
               style: const TextStyle(fontSize: 16),
             ),
         ],

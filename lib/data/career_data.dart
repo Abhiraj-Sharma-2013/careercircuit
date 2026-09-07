@@ -17,7 +17,7 @@ const List<Career> careerData = [
       'Communication',
     ],
     starterProject: 'Build a simple quiz app or calculator app.',
-    interestTags: ['Thinker', 'TechAdapter', 'Builder', 'Software'],
+    interestTags: ['I', 'R', 'C'],
     aiRiskLevel: 'Medium',
     futureProofScore: 82,
     aiImpactSummary:
@@ -43,7 +43,7 @@ const List<Career> careerData = [
       'Communication',
     ],
     starterProject: 'Build a password strength checker.',
-    interestTags: ['Thinker', 'TechAdapter', 'Helper', 'Cybersecurity'],
+    interestTags: ['I', 'C', 'R'],
     aiRiskLevel: 'Medium',
     futureProofScore: 88,
     aiImpactSummary:
@@ -70,7 +70,7 @@ const List<Career> careerData = [
       'Problem Solving',
     ],
     starterProject: 'Redesign the homepage of a school app or website.',
-    interestTags: ['Creator', 'TechAdapter', 'Helper', 'Design'],
+    interestTags: ['A', 'I', 'S'],
     aiRiskLevel: 'Medium',
     futureProofScore: 80,
     aiImpactSummary:
@@ -98,7 +98,7 @@ const List<Career> careerData = [
     ],
     starterProject:
         'Analyze your weekly screen time or study time and create charts.',
-    interestTags: ['Thinker', 'Organizer', 'TechAdapter', 'Data'],
+    interestTags: ['I', 'C'],
     aiRiskLevel: 'Medium-High',
     futureProofScore: 72,
     aiImpactSummary:
@@ -125,7 +125,7 @@ const List<Career> careerData = [
       'Teamwork',
     ],
     starterProject: 'Build a simple robot using a beginner robotics kit.',
-    interestTags: ['Builder', 'Thinker', 'TechAdapter', 'Engineering'],
+    interestTags: ['R', 'I'],
     aiRiskLevel: 'Low-Medium',
     futureProofScore: 90,
     aiImpactSummary:
@@ -152,7 +152,7 @@ const List<Career> careerData = [
       'Helping Others',
     ],
     starterProject: 'Create a mini lesson and teach it to a younger student.',
-    interestTags: ['Helper', 'Leader', 'Creator', 'Teaching'],
+    interestTags: ['S', 'A', 'E'],
     aiRiskLevel: 'Low-Medium',
     futureProofScore: 84,
     aiImpactSummary:
@@ -180,7 +180,7 @@ const List<Career> careerData = [
     ],
     starterProject:
         'Track recycling, water use, or local litter for one week and make a report.',
-    interestTags: ['Explorer', 'Thinker', 'Helper', 'Environment'],
+    interestTags: ['I', 'R', 'S'],
     aiRiskLevel: 'Low-Medium',
     futureProofScore: 86,
     aiImpactSummary:
@@ -208,7 +208,7 @@ const List<Career> careerData = [
     ],
     starterProject:
         'Create a simple business idea and make a one-page business plan.',
-    interestTags: ['Leader', 'Creator', 'Organizer', 'Business'],
+    interestTags: ['E', 'S', 'C'],
     aiRiskLevel: 'Low-Medium',
     futureProofScore: 83,
     aiImpactSummary:

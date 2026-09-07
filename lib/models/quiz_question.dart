@@ -13,11 +13,7 @@ class QuizQuestion {
 class QuizAnswer {
   final String text;
 
-  // Example:
-  // {
-  //   'Thinker': 2,
-  //   'TechAdapter': 1,
-  // }
+  // Example: {'R': 1}
   final Map<String, int> scores;
 
   const QuizAnswer({required this.text, required this.scores});

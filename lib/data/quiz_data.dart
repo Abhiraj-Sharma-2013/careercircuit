@@ -1,11 +1,18 @@
 import '../models/quiz_question.dart';
 
-const practicalScores = {'Builder': 2, 'Engineering': 1};
-const analyticalScores = {'Thinker': 2, 'TechAdapter': 1};
-const creativeScores = {'Creator': 2, 'Design': 1};
-const helpingScores = {'Helper': 2, 'Teaching': 1};
-const leadershipScores = {'Leader': 2, 'Business': 1};
-const organizedScores = {'Organizer': 2, 'Data': 1};
+const realisticScores = {'R': 1};
+const investigativeScores = {'I': 1};
+const artisticScores = {'A': 1};
+const socialScores = {'S': 1};
+const enterprisingScores = {'E': 1};
+const conventionalScores = {'C': 1};
+
+const practicalScores = realisticScores;
+const analyticalScores = investigativeScores;
+const creativeScores = artisticScores;
+const helpingScores = socialScores;
+const leadershipScores = enterprisingScores;
+const organizedScores = conventionalScores;
 
 const List<QuizQuestion> quizQuestions = [
   QuizQuestion(
