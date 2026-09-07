@@ -26,7 +26,7 @@ The app asks a series of personal-interest questions, calculates career interest
 
 - Flutter
 - Dart
-- Material Design 3
+- Android Studio
 
 ## Project Structure
 

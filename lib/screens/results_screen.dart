@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 import '../data/career_data.dart';
 import '../engine/career_matcher.dart';
 import '../models/career.dart';
+import '../models/student_intake.dart';
 import 'career_detail_screen.dart';
 
 class ResultsScreen extends StatelessWidget {
   final Map<String, int> studentScores;
+  final StudentIntake studentIntake;
 
-  const ResultsScreen({super.key, required this.studentScores});
+  const ResultsScreen({
+    super.key,
+    required this.studentScores,
+    required this.studentIntake,
+  });
 
   void _openCareerDetail(BuildContext context, Career career) {
     Navigator.push(
@@ -35,6 +41,26 @@ class ResultsScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(24),
         children: [
+          const Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: 'For exploration only: ',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                TextSpan(
+                  text:
+                      'AI career suggestions may be incomplete or inaccurate. '
+                      'Do not rely on them alone when making important education '
+                      'or career decisions.',
+                ),
+              ],
+            ),
+            style: TextStyle(fontSize: 14, color: Color(0xFF123B63)),
+          ),
+
+          const SizedBox(height: 20),
+
           const Text(
             'Your Top Career Matches',
             style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
@@ -46,12 +72,24 @@ class ResultsScreen extends StatelessWidget {
             'Confidence Score: $confidenceScore%',
             style: const TextStyle(
               fontSize: 18,
-              color: Colors.indigo,
+              color: Color(0xFF123B63),
               fontWeight: FontWeight.bold,
             ),
           ),
 
           const SizedBox(height: 12),
+
+          Text(
+            studentIntake.grade == null
+                ? 'Grade: Not provided'
+                : 'Grade: ${studentIntake.grade}th',
+          ),
+          if (studentIntake.likes.isNotEmpty)
+            Text('Strong likes: ${studentIntake.likes}'),
+          if (studentIntake.dislikes.isNotEmpty)
+            Text('Strong dislikes: ${studentIntake.dislikes}'),
+
+          const SizedBox(height: 16),
 
           const Text(
             'These careers were chosen by comparing your quiz answers with career interest tags.',

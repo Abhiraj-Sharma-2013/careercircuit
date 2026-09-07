@@ -24,7 +24,7 @@ class CareerDetailScreen extends StatelessWidget {
             career.category,
             style: const TextStyle(
               fontSize: 16,
-              color: Colors.indigo,
+              color: Color(0xFF123B63),
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -85,7 +85,7 @@ class CareerDetailScreen extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: Colors.indigo,
+                color: Color(0xFF123B63),
               ),
             ),
           ),

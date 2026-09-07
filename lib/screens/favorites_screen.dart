@@ -24,7 +24,7 @@ class FavoritesScreen extends StatelessWidget {
             Card(
               margin: const EdgeInsets.only(bottom: 12),
               child: ListTile(
-                leading: const Icon(Icons.favorite, color: Colors.red),
+                leading: const Icon(Icons.favorite, color: Color(0xFF123B63)),
                 title: Text(career),
                 subtitle: const Text('Saved career path'),
               ),
