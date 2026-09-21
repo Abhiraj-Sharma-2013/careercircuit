@@ -16,11 +16,6 @@ void main() {
     await tester.pumpWidget(const CareerCircuitApp());
     await tapVisible(tester, find.text('Get Started'));
     await tester.pumpAndSettle();
-    expect(find.textContaining('About 5 to 8 minutes.'), findsOneWidget);
-    expect(
-      find.textContaining('CareerCircuit suggests career options'),
-      findsOneWidget,
-    );
     expect(find.textContaining('draft'), findsNothing);
     expect(find.byType(TextFormField), findsNothing);
     await tapVisible(tester, find.byKey(const ValueKey('stage-highSchool')));

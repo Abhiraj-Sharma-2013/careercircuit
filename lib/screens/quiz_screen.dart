@@ -236,25 +236,6 @@ class _QuizScreenState extends State<QuizScreen> {
                               ),
                             ),
                           ),
-                        const Text(
-                          'Your stage only adjusts the wording. Choose what you would enjoy, whether or not you have tried it. Changing your stage starts a fresh quiz.',
-                        ),
-                        const SizedBox(height: 16),
-                        const Text(
-                          'Six sections. About 5 to 8 minutes. No right or wrong answers.',
-                        ),
-                        const SizedBox(height: 16),
-                        const Text(
-                          'Picture yourself trying each activity. Move the slider to show how much you would enjoy it. You do not need experience.',
-                        ),
-                        const SizedBox(height: 16),
-                        const Text(
-                          'Your answers stay on this device during this session. They are not uploaded or saved after you close the app. Your stage selection stays here too.',
-                        ),
-                        const SizedBox(height: 16),
-                        const Text(
-                          'CareerCircuit suggests career options based on your interests. Explore these ideas to learn what you might enjoy.',
-                        ),
                         const SizedBox(height: 24),
                         FilledButton(
                           onPressed: _stage == null
