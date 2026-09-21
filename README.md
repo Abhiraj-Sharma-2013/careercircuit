@@ -1,37 +1,40 @@
 # CareerCircuit
 
-CareerCircuit is a Flutter app for students to explore work interests and career possibilities.
+CareerCircuit is a privacy-first Flutter career-exploration app. Results come from a bundled dataset of 120 Holland codes and 210 occupations, with three pathways per code. There are no runtime network calls, accounts, analytics, or AI scoring calls.
 
-## Assessment
+## Assessment and results
 
-- 30 activity ratings, five per Holland RIASEC category, grouped into six themed pages.
-- Six-position sliders: gray Never tried, then five red-to-green enjoyment ratings with text labels. The exposure choice stores 3 points and a separate exposure-gap flag, never a zero interest score. Untouched sliders remain unanswered.
-- Only a career-stage selection; no free-text collection. Responses and exposure flags stay in memory on the device for the session; there is no upload, analytics, or disk persistence in this assessment flow.
-- Back navigation preserves answers; choosing an enjoyment position clears the exposure flag. All items must be answered before scoring.
-- Pure Dart scoring sums five ratings per category (5 to 25). AI and preferences do not participate.
-- Results show all six totals and exposure counts, preserve highest-score ties, and suggest exploration rather than career prescriptions. No confidence percentage is displayed.
-- If over half the items are untried, all totals are equal, or every category totals at most 10, results offer the full catalogue alphabetically. These are conservative UI rules, not validated thresholds.
-- Otherwise career suggestions use the existing sum of interest-tag totals, with alphabetical ties. This is a heuristic, not a calibrated match probability. Career profiles with different tag counts can receive different baseline totals.
+- 30 activity ratings, five per RIASEC category, on six compact pages.
+- Six slider positions: gray Never tried, then five enjoyment ratings. Never tried stores rating 3 and a separate exposure flag; an untouched slider remains unanswered.
+- Local scoring is unchanged: sum five ratings per category (5 to 25). Results display raw / 25 * 100 as reported **interest level**, never ability or a success probability.
+- Rank raw totals using RIASEC order for exact ties. Close first/second and third/fourth totals produce alternate codes without changing responses or scores.
+- Uncertainty checks cover broad profiles, over 40% untried items, 80% repeated ratings, and completion under 90 seconds. These are supportive UI heuristics, not validated confidence estimates.
+- A local Stopwatch starts when the quiz starts and resets with a new stage. Timing, responses, stage, and theme remain in session memory only.
+- Results use the dataset's three career IDs in their supplied order. AI exposure, learning lists, tools, sample tasks and source metadata come from the same asset.
+- AI numbers are exposure percentile ranks among occupations, not job-loss probabilities. Career fit explanations compare normalized interest profiles without inventing suitability claims.
 
-**Draft item bank:** requires pilot testing and expert review. It is not a validated assessment or ability test. The 5 to 8 minute target requires timing with students, along with comprehension, reliability, category-overlap, and exposure-bias review.
+## Data and architecture
 
-## Structure
+- `assets/career_dataset.json`: unmodified supplied dataset v1.1, registered as a Flutter asset.
+- `lib/models/career_dataset.dart`: six immutable JSON model types and structural validation.
+- `lib/repositories/career_data_repository.dart`: singleton, concurrent-load caching, compute-based decoding/validation, retry after failure.
+- `lib/view_models/results_view_model.dart`: pure interpretation of quiz scores and response metadata, independent of the dataset.
+- `lib/presentation/career_fit.dart`: data-derived interest-overlap explanations.
+- `lib/presentation/results_wording.dart`: wording policy and approved source-text display substitution.
+- `lib/screens/results_screen.dart`: CustomScrollView, six accessible interest bars, uncertainty, alternate codes, lazy pathway cards, and sources.
+- `lib/widgets/pathway_card.dart`: full dataset-backed pathway content with expandable sample tasks.
+- `lib/data/quiz_data.dart` and `lib/data/stage_question_text.dart`: core activities and stage wording.
+- `assets/riasec_questions.json`: portable base-item export; tests enforce parity with the Dart base bank.
 
-- `lib/data/quiz_data.dart`: runtime item bank, source of truth.
-- `assets/riasec_questions.json`: portable JSON export (not runtime-loaded); a test enforces equality with the Dart bank.
-- `lib/models/quiz_question.dart`: item metadata, exact scale labels, and local responses.
-- `lib/models/assessment_result.dart`: immutable result snapshot and exploration rules.
-- `lib/engine/riasec_engine.dart`: local scoring and bank/completion validation.
-- `lib/screens/quiz_screen.dart`: introduction and mobile questionnaire.
-- `lib/screens/results_screen.dart`: transparent scores and career exploration.
-- `lib/engine/career_matcher.dart`: local career matching.
-- `lib/data/career_data.dart`: existing career catalogue.
+The old small catalogue, interest-tag matcher, generic static summaries, obsolete career detail screen and their obsolete tests have been retired. [Dataset integration notes](docs/results_dataset_integration.md) record evidence limitations and display decisions.
 
-Future post-quiz preferences should only filter or contextualize browsing, never alter core scores.
+## Themes and stages
+
+The top-right switch controls light/dark mode across the app, initially following the device. Stages are Middle school, High school, College student, Graduate, and Working professional. Stage only changes activity wording, never scores or dataset ranking. Changing stages starts a fresh quiz; retaking results preselects the previous stage.
+
+This is a custom draft item bank requiring pilot testing and expert review. Stage wording equivalence and the 5 to 8 minute target are not established. A RIASEC framework alone does not validate these items.
 
 ## Development
-
-Requires Flutter with Dart compatible with `pubspec.yaml` and a connected device or emulator.
 
 ```sh
 flutter pub get
@@ -40,14 +43,4 @@ flutter test
 flutter run
 ```
 
-Tests cover bank/export integrity, scoring bounds, exposure replacement, missing responses, ties, and a full six-page, 30-item flow on a narrow screen with enlarged text.
-
-## Themes and career stages
-
-The top-right switch changes light/dark mode throughout the app; the initial mode follows the device. Theme and stage choices stay in memory for this session.
-
-Before starting, choose Middle school, High school, College student, Graduate, or Working professional (career change). `lib/data/stage_question_text.dart` supplies all 150 activity wordings. Each wording maps to the same item ID, category, rating scale, and local scoring method. Stage is never an input to scoring or career ranking. Changing stages clears in-progress responses so a new wording set starts fresh; retaking from results preselects the last stage.
-
-These custom wording variants need comprehension and equivalence review across audiences. They are not validated stage-specific assessments or age norms. The base JSON export remains the original common-language bank; stage variants are maintained separately in Dart.
-
-Stage wording progresses from concrete examples for younger learners to direct vocational activities for older audiences. Category and sub-angle remain stable, but broader activity contexts mean cross-stage score equivalence has not been established.
+Tests cover actual asset integrity and caching, scoring and uncertainty boundaries, normalized explanations, six-page quiz flows, error recovery, alternate-code switching, and results for RIA, SEC, CEI and AER at 320dp width with 2x text. Rendered source/task text is included in wording guardrails.

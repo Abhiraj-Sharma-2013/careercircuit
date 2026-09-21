@@ -19,11 +19,4 @@ void main() {
   test('uses RIASEC order to break ties', () {
     expect(RiasecEngine.hollandCode({'R': 1, 'I': 1, 'A': 1}), 'RIA');
   });
-
-  test('returns the reusable summary for an unordered profile', () {
-    expect(
-      RiasecEngine.summary({'R': 3, 'I': 2, 'A': 1}),
-      RiasecEngine.profileSummaries['RIA'],
-    );
-  });
 }

@@ -66,7 +66,6 @@ void main() {
     }
     final result = RiasecEngine.score(quizQuestions, responses);
     expect(result.scores, {'R': 5, 'I': 25, 'A': 5, 'S': 5, 'E': 5, 'C': 5});
-    expect(result.highestCodes, ['I']);
   });
 
   test('untried uses midpoint, tracks category, and clears when replaced', () {
@@ -108,24 +107,14 @@ void main() {
     );
   });
 
-  test('ties are preserved and uncertain profiles use broad exploration', () {
+  test('result snapshot is immutable and independent of later edits', () {
     final responses = uniform(3);
-    final flat = RiasecEngine.score(quizQuestions, responses);
-    expect(flat.highestCodes, RiasecEngine.codes);
-    expect(flat.showBroadExploration, isTrue);
-    responses['I1'] = QuizResponse.rated(5);
-    responses['S1'] = QuizResponse.rated(5);
-    final tied = RiasecEngine.score(quizQuestions, responses);
-    expect(tied.highestCodes, ['I', 'S']);
-    expect(tied.showBroadExploration, isFalse);
-    for (final q in quizQuestions.take(16)) {
-      responses[q.id] = const QuizResponse.notTried();
-    }
-    expect(RiasecEngine.score(quizQuestions, responses).mostlyUntried, isTrue);
-    expect(
-      RiasecEngine.score(quizQuestions, uniform(1)).showBroadExploration,
-      isTrue,
-    );
-    expect(() => flat.scores['R'] = 25, throwsUnsupportedError);
+    final result = RiasecEngine.score(quizQuestions, responses);
+    responses['I1'] = const QuizResponse.notTried();
+    expect(result.responses['I1']!.exposureGap, isFalse);
+    expect(result.scores.values, everyElement(15));
+    expect(() => result.scores['R'] = 25, throwsUnsupportedError);
+    expect(() => result.exposureGaps.clear(), throwsUnsupportedError);
+    expect(() => result.responses.clear(), throwsUnsupportedError);
   });
 }

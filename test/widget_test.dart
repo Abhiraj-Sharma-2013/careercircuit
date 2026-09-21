@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:careercircuit/repositories/career_data_repository.dart';
 import 'slider_helpers.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:careercircuit/main.dart';
@@ -6,6 +7,8 @@ import 'package:careercircuit/data/quiz_data.dart';
 import 'package:careercircuit/screens/results_screen.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  setUpAll(() => CareerDataRepository.instance.ensureLoaded());
   Future<void> tapVisible(WidgetTester tester, Finder finder) async {
     await tester.ensureVisible(finder);
     await tester.tap(finder);
@@ -104,17 +107,13 @@ void main() {
     final screen = tester.widget<ResultsScreen>(find.byType(ResultsScreen));
     expect(screen.result.scores.values, everyElement(15));
     expect(screen.result.exposureGapCount, 30);
+    expect(screen.completionTime, isNotNull);
     await tester.scrollUntilVisible(
-      find.textContaining('For exploration only:'),
-      200,
-    );
-    expect(find.textContaining('For exploration only:'), findsOneWidget);
-    await tester.scrollUntilVisible(
-      find.textContaining('Many activities are new to you.'),
+      find.textContaining('Your interests are still forming'),
       200,
     );
     expect(
-      find.textContaining('Many activities are new to you.'),
+      find.textContaining('Your interests are still forming'),
       findsOneWidget,
     );
     expect(tester.takeException(), isNull);

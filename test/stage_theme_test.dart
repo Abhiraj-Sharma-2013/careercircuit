@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:careercircuit/repositories/career_data_repository.dart';
 import 'slider_helpers.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:careercircuit/main.dart';
@@ -8,6 +9,8 @@ import 'package:careercircuit/models/career_stage.dart';
 import 'package:careercircuit/screens/quiz_screen.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  setUpAll(() => CareerDataRepository.instance.ensureLoaded());
   test('every stable item has wording for every stage', () {
     expect(
       stageQuestionText.keys.toSet(),

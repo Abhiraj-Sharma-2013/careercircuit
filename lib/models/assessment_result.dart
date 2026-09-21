@@ -15,16 +15,4 @@ class AssessmentResult {
 
   int get exposureGapCount =>
       exposureGaps.values.fold(0, (total, count) => total + count);
-
-  bool get mostlyUntried => exposureGapCount > responses.length / 2;
-  bool get isFlat => scores.values.toSet().length == 1;
-  bool get allLow => scores.values.every((score) => score <= 10);
-
-  // A conservative UX rule, not a validated psychometric cutoff.
-  bool get showBroadExploration => mostlyUntried || isFlat || allLow;
-
-  List<String> get highestCodes {
-    final highest = scores.values.reduce((a, b) => a > b ? a : b);
-    return scores.keys.where((code) => scores[code] == highest).toList();
-  }
 }

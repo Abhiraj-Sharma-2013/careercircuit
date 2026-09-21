@@ -20,6 +20,7 @@ class _QuizScreenState extends State<QuizScreen> {
   int _page = 0;
   bool _started = false;
   bool _finishing = false;
+  final _quizTimer = Stopwatch();
   final _responses = <String, QuizResponse>{};
   final _scrollController = ScrollController();
 
@@ -31,6 +32,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
   @override
   void dispose() {
+    _quizTimer.stop();
     _scrollController.dispose();
     super.dispose();
   }
@@ -53,12 +55,17 @@ class _QuizScreenState extends State<QuizScreen> {
   void _next() {
     if (_finishing || !_pageComplete) return;
     if (_page == quizSections.length - 1) {
+      _quizTimer.stop();
       final result = RiasecEngine.score(quizQuestions, _responses);
       setState(() => _finishing = true);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (_) => ResultsScreen(result: result, stage: _stage!),
+          builder: (_) => ResultsScreen(
+            result: result,
+            stage: _stage!,
+            completionTime: _quizTimer.elapsed,
+          ),
         ),
       );
     } else {
@@ -229,6 +236,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                     if (_stage != stage) {
                                       _stage = stage;
                                       _responses.clear();
+                                      _quizTimer
+                                        ..stop()
+                                        ..reset();
                                       _page = 0;
                                     }
                                   }),
@@ -241,6 +251,7 @@ class _QuizScreenState extends State<QuizScreen> {
                           onPressed: _stage == null
                               ? null
                               : () {
+                                  _quizTimer.start();
                                   setState(() => _started = true);
                                   _resetScroll();
                                 },
