@@ -1,4 +1,43 @@
+import '../models/assessment_result.dart';
+import '../models/quiz_question.dart';
+
 class RiasecEngine {
+  /// Preferences and AI output are deliberately not inputs to scoring.
+  static AssessmentResult score(
+    List<QuizQuestion> questions,
+    Map<String, QuizResponse> responses,
+  ) {
+    final counts = {for (final code in codes) code: 0};
+    final ids = <String>{};
+    for (final question in questions) {
+      if (!counts.containsKey(question.riasecType) || !ids.add(question.id)) {
+        throw ArgumentError('Invalid category or duplicate item ID.');
+      }
+      counts[question.riasecType] = counts[question.riasecType]! + 1;
+    }
+    if (questions.length != 30 || counts.values.any((count) => count != 5)) {
+      throw ArgumentError('Expected 30 items, five per RIASEC category.');
+    }
+    if (responses.length != ids.length || !ids.every(responses.containsKey)) {
+      throw StateError('Answer every core item before calculating scores.');
+    }
+    final scores = {for (final code in codes) code: 0};
+    final gaps = {for (final code in codes) code: 0};
+    for (final question in questions) {
+      final response = responses[question.id]!;
+      scores[question.riasecType] =
+          scores[question.riasecType]! + response.rating;
+      if (response.exposureGap) {
+        gaps[question.riasecType] = gaps[question.riasecType]! + 1;
+      }
+    }
+    return AssessmentResult(
+      scores: scores,
+      exposureGaps: gaps,
+      responses: responses,
+    );
+  }
+
   static const codes = ['R', 'I', 'A', 'S', 'E', 'C'];
 
   static const labels = {

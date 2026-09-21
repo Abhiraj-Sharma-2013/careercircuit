@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/career.dart';
+import '../widgets/app_chrome.dart';
 
 class CareerDetailScreen extends StatelessWidget {
   final Career career;
@@ -9,28 +10,26 @@ class CareerDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(career.title)),
+      appBar: AppBar(
+        title: Text(career.title, overflow: TextOverflow.ellipsis),
+        actions: const [ThemeToggle()],
+      ),
       body: ListView(
-        padding: const EdgeInsets.all(24),
+        padding: EdgeInsets.symmetric(
+          vertical: 24,
+          horizontal: ((MediaQuery.sizeOf(context).width - 720) / 2).clamp(
+            20,
+            double.infinity,
+          ),
+        ),
         children: [
-          Text(
-            career.title,
-            style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+          JourneyBanner(
+            eyebrow: career.category,
+            title: career.title,
+            subtitle: career.shortDescription,
+            icon: Icons.work_outline_rounded,
           ),
-
-          const SizedBox(height: 8),
-
-          Text(
-            career.category,
-            style: const TextStyle(
-              fontSize: 16,
-              color: Color(0xFF123B63),
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-
           const SizedBox(height: 24),
-
           _Section(
             title: 'What this career does',
             child: Text(
@@ -40,7 +39,7 @@ class CareerDetailScreen extends StatelessWidget {
           ),
 
           _Section(
-            title: 'Helpful school subjects',
+            title: 'Topics to explore',
             child: _BulletList(items: career.schoolSubjects),
           ),
 
@@ -82,10 +81,10 @@ class CareerDetailScreen extends StatelessWidget {
             title: 'Future-Proof Score',
             child: Text(
               '${career.futureProofScore}/100',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF123B63),
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
           ),
@@ -174,7 +173,18 @@ class _BulletList extends StatelessWidget {
         for (final item in items)
           Padding(
             padding: const EdgeInsets.only(bottom: 6),
-            child: Text('• $item', style: const TextStyle(fontSize: 16)),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(top: 7, right: 10),
+                  child: Icon(Icons.circle, size: 6),
+                ),
+                Expanded(
+                  child: Text(item, style: const TextStyle(fontSize: 16)),
+                ),
+              ],
+            ),
           ),
       ],
     );

@@ -1,58 +1,53 @@
 # CareerCircuit
 
-CareerCircuit is a Flutter career discovery app that helps students explore future-focused career paths through a short interactive quiz.
+CareerCircuit is a Flutter app for students to explore work interests and career possibilities.
 
-The app asks a series of personal-interest questions, calculates career interest scores, and recommends top career matches along with detailed role information and AI impact insights.
+## Assessment
 
-## Features
+- 30 activity ratings, five per Holland RIASEC category, grouped into six themed pages.
+- Six-position sliders: gray Never tried, then five red-to-green enjoyment ratings with text labels. The exposure choice stores 3 points and a separate exposure-gap flag, never a zero interest score. Untouched sliders remain unanswered.
+- Only a career-stage selection; no free-text collection. Responses and exposure flags stay in memory on the device for the session; there is no upload, analytics, or disk persistence in this assessment flow.
+- Back navigation preserves answers; choosing an enjoyment position clears the exposure flag. All items must be answered before scoring.
+- Pure Dart scoring sums five ratings per category (5 to 25). AI and preferences do not participate.
+- Results show all six totals and exposure counts, preserve highest-score ties, and suggest exploration rather than career prescriptions. No confidence percentage is displayed.
+- If over half the items are untried, all totals are equal, or every category totals at most 10, results offer the full catalogue alphabetically. These are conservative UI rules, not validated thresholds.
+- Otherwise career suggestions use the existing sum of interest-tag totals, with alphabetical ties. This is a heuristic, not a calibrated match probability. Career profiles with different tag counts can receive different baseline totals.
 
-- Welcome screen with a simple “Get Started” flow
-- Multi-question career interest quiz
-- Scoring engine that maps quiz answers to career categories
-- Results screen with:
-  - top matched careers
-  - confidence score
-  - interest score breakdown
-- Career detail pages including:
-  - career description
-  - recommended school subjects
-  - useful skills
-  - starter project ideas
-  - AI risk / impact
-  - future-proof score
-  - alternative career suggestions
+**Draft item bank:** requires pilot testing and expert review. It is not a validated assessment or ability test. The 5 to 8 minute target requires timing with students, along with comprehension, reliability, category-overlap, and exposure-bias review.
 
-## Built With
+## Structure
 
-- Flutter
-- Dart
-- Android Studio
+- `lib/data/quiz_data.dart`: runtime item bank, source of truth.
+- `assets/riasec_questions.json`: portable JSON export (not runtime-loaded); a test enforces equality with the Dart bank.
+- `lib/models/quiz_question.dart`: item metadata, exact scale labels, and local responses.
+- `lib/models/assessment_result.dart`: immutable result snapshot and exploration rules.
+- `lib/engine/riasec_engine.dart`: local scoring and bank/completion validation.
+- `lib/screens/quiz_screen.dart`: introduction and mobile questionnaire.
+- `lib/screens/results_screen.dart`: transparent scores and career exploration.
+- `lib/engine/career_matcher.dart`: local career matching.
+- `lib/data/career_data.dart`: existing career catalogue.
 
-## Project Structure
+Future post-quiz preferences should only filter or contextualize browsing, never alter core scores.
 
-- `lib/main.dart` — app entry point
-- `lib/screens/welcome_screen.dart` — landing screen
-- `lib/screens/quiz_screen.dart` — quiz interaction screen
-- `lib/screens/results_screen.dart` — career match results
-- `lib/screens/career_detail_screen.dart` — detailed career view
-- `lib/engine/career_matcher.dart` — matching logic and scoring
-- `lib/data/quiz_data.dart` — quiz questions and answer scoring
-- `lib/data/career_data.dart` — career definitions
-- `lib/data/career_categories.dart` — career category metadata
-- `lib/models/quiz_question.dart` — quiz model
-- `lib/models/career.dart` — career model
-- `lib/models/career_category.dart` — career category model
+## Development
 
-## Getting Started
+Requires Flutter with Dart compatible with `pubspec.yaml` and a connected device or emulator.
 
-### Prerequisites
-
-- Flutter SDK
-- A connected device or emulator
-
-### Run Locally
-
-```bash
-cd C:\Workspaces\AppdevWorkspace\careercircuit
+```sh
 flutter pub get
+flutter analyze
+flutter test
 flutter run
+```
+
+Tests cover bank/export integrity, scoring bounds, exposure replacement, missing responses, ties, and a full six-page, 30-item flow on a narrow screen with enlarged text.
+
+## Themes and career stages
+
+The top-right switch changes light/dark mode throughout the app; the initial mode follows the device. Theme and stage choices stay in memory for this session.
+
+Before starting, choose Middle school, High school, College student, Graduate, or Working professional (career change). `lib/data/stage_question_text.dart` supplies all 150 activity wordings. Each wording maps to the same item ID, category, rating scale, and local scoring method. Stage is never an input to scoring or career ranking. Changing stages clears in-progress responses so a new wording set starts fresh; retaking from results preselects the last stage.
+
+These custom wording variants need comprehension and equivalence review across audiences. They are not validated stage-specific assessments or age norms. The base JSON export remains the original common-language bank; stage variants are maintained separately in Dart.
+
+Stage wording progresses from concrete examples for younger learners to direct vocational activities for older audiences. Category and sub-angle remain stable, but broader activity contexts mean cross-stage score equivalence has not been established.

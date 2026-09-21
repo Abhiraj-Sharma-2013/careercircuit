@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/app_chrome.dart';
 
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({super.key});
@@ -11,7 +12,10 @@ class FavoritesScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Favorite Careers')),
+      appBar: AppBar(
+        title: const Text('Favorite Careers'),
+        actions: const [ThemeToggle()],
+      ),
       body: ListView(
         padding: const EdgeInsets.all(24),
         children: [
@@ -24,7 +28,10 @@ class FavoritesScreen extends StatelessWidget {
             Card(
               margin: const EdgeInsets.only(bottom: 12),
               child: ListTile(
-                leading: const Icon(Icons.favorite, color: Color(0xFF123B63)),
+                leading: Icon(
+                  Icons.favorite,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
                 title: Text(career),
                 subtitle: const Text('Saved career path'),
               ),
