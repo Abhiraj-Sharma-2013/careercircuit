@@ -7,7 +7,12 @@ import 'package:careercircuit/data/quiz_data.dart';
 import 'package:careercircuit/screens/results_screen.dart';
 
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
+  final binding = TestWidgetsFlutterBinding.ensureInitialized();
+  setUp(() {
+    binding.platformDispatcher.accessibilityFeaturesTestValue =
+        const FakeAccessibilityFeatures(disableAnimations: true);
+  });
+  tearDown(binding.platformDispatcher.clearAccessibilityFeaturesTestValue);
   setUpAll(() => CareerDataRepository.instance.ensureLoaded());
   Future<void> tapVisible(WidgetTester tester, Finder finder) async {
     await tester.ensureVisible(finder);
@@ -24,6 +29,48 @@ void main() {
     await tapVisible(tester, find.byKey(const ValueKey('stage-highSchool')));
     await tapVisible(tester, find.text('Start quiz'));
   }
+
+  testWidgets('unanswered thumbs pulse and a default-position tap confirms', (
+    tester,
+  ) async {
+    await start(tester);
+    final slider = find.byKey(const ValueKey('slider-R1'));
+    Color thumbColor() => SliderTheme.of(tester.element(slider)).thumbColor!;
+    final colors = Theme.of(tester.element(slider)).colorScheme;
+    expect(thumbColor(), colors.outline);
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(thumbColor(), colors.outline, reason: 'Respect reduced motion');
+
+    tester.platformDispatcher.accessibilityFeaturesTestValue =
+        const FakeAccessibilityFeatures();
+    await tester.pump();
+    final initialColor = thumbColor();
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(thumbColor(), isNot(initialColor));
+    expect(tester.widget<Slider>(slider).value, 0);
+    expect(find.text('Choose your answer'), findsNWidgets(5));
+
+    await tester.ensureVisible(slider);
+    final rect = tester.getRect(slider);
+    await tester.tapAt(Offset(rect.left + 24, rect.center.dy));
+    await tester.pump();
+    expect(tester.widget<Slider>(slider).value, 0);
+    expect(thumbColor(), colors.primary);
+    expect(
+      tester.widget<Text>(find.byKey(const ValueKey('status-R1'))).data,
+      'Never tried',
+    );
+    expect(find.text('Choose your answer'), findsNWidgets(4));
+    expect(
+      tester
+          .widget<LinearProgressIndicator>(find.byType(LinearProgressIndicator))
+          .value,
+      1 / 30,
+    );
+    await tester.pump(const Duration(milliseconds: 800));
+    expect(thumbColor(), colors.primary, reason: 'Confirmed thumbs stay solid');
+    expect(tester.takeException(), isNull);
+  });
 
   testWidgets('five sliders require explicit answers and preserve edits', (
     tester,

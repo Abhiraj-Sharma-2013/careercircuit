@@ -148,7 +148,7 @@ class _QuizScreenState extends State<QuizScreen> {
                               const Padding(
                                 padding: EdgeInsets.only(bottom: 12),
                                 child: Text(
-                                  'Gray: never tried. Red to green: how much you would enjoy it.',
+                                  'Tap or move every slider—even for Never tried. Blinking means unanswered; solid means confirmed. Red to green: Not at all to Very much.',
                                 ),
                               ),
                               for (final question in _questions)
@@ -330,15 +330,11 @@ class _ActivityCard extends StatelessWidget {
           ),
           Semantics(
             label: '$text ${QuizQuestion.prompt}',
-            child: SliderTheme(
-              data: SliderTheme.of(context).copyWith(
-                trackHeight: 6,
-                trackShape: const _InterestTrack(),
-                thumbColor: rated ? colors.primary : colors.outline,
-                activeTickMarkColor: Colors.white,
-                inactiveTickMarkColor: Colors.white,
-                showValueIndicator: ShowValueIndicator.never,
-              ),
+            hint: response == null
+                ? 'Choose an answer, or tap the circle to confirm Never tried.'
+                : 'Answer recorded',
+            child: _AnswerSliderTheme(
+              answered: response != null,
               child: Slider(
                 key: ValueKey('slider-${question.id}'),
                 value: value,
@@ -387,6 +383,77 @@ class _ActivityCard extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _AnswerSliderTheme extends StatefulWidget {
+  final bool answered;
+  final Widget child;
+
+  const _AnswerSliderTheme({required this.answered, required this.child});
+
+  @override
+  State<_AnswerSliderTheme> createState() => _AnswerSliderThemeState();
+}
+
+class _AnswerSliderThemeState extends State<_AnswerSliderTheme>
+    with SingleTickerProviderStateMixin {
+  late final _pulse = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 800),
+    value: 1,
+  );
+
+  void _updatePulse() {
+    if (widget.answered || MediaQuery.disableAnimationsOf(context)) {
+      _pulse.stop();
+      _pulse.value = 1;
+    } else if (!_pulse.isAnimating) {
+      _pulse.repeat(reverse: true);
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _updatePulse();
+  }
+
+  @override
+  void didUpdateWidget(covariant _AnswerSliderTheme oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _updatePulse();
+  }
+
+  @override
+  void dispose() {
+    _pulse.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return AnimatedBuilder(
+      animation: _pulse,
+      child: widget.child,
+      builder: (context, child) => SliderTheme(
+        data: SliderTheme.of(context).copyWith(
+          trackHeight: 6,
+          trackShape: const _InterestTrack(),
+          thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 10),
+          thumbColor: widget.answered
+              ? colors.primary
+              : colors.outline.withValues(
+                  alpha: 0.35 + 0.65 * Curves.easeInOut.transform(_pulse.value),
+                ),
+          activeTickMarkColor: Colors.white,
+          inactiveTickMarkColor: Colors.white,
+          showValueIndicator: ShowValueIndicator.never,
+        ),
+        child: child!,
       ),
     );
   }

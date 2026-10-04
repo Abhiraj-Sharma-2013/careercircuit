@@ -9,7 +9,12 @@ import 'package:careercircuit/models/career_stage.dart';
 import 'package:careercircuit/screens/quiz_screen.dart';
 
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
+  final binding = TestWidgetsFlutterBinding.ensureInitialized();
+  setUp(() {
+    binding.platformDispatcher.accessibilityFeaturesTestValue =
+        const FakeAccessibilityFeatures(disableAnimations: true);
+  });
+  tearDown(binding.platformDispatcher.clearAccessibilityFeaturesTestValue);
   setUpAll(() => CareerDataRepository.instance.ensureLoaded());
   test('every stable item has wording for every stage', () {
     expect(
