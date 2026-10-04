@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9a7f8952-ed58-45d7-ac01-bc1f82847b5a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/quiz_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/quiz_data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/engine/career_matcher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/engine/career_matcher.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/engine/riasec_engine.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/engine/riasec_engine.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/models/quiz_question.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/quiz_question.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/models/student_intake.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/career_detail_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/career_detail_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/favorites_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/favorites_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/quiz_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/quiz_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/results_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/results_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/welcome_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/welcome_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/widget_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/widget_test.dart" afterDir="false" />
-    </list>
+    <list default="true" id="9a7f8952-ed58-45d7-ac01-bc1f82847b5a" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

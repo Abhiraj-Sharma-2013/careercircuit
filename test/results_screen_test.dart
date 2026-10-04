@@ -72,6 +72,8 @@ void main() {
         );
         await tester.pumpAndSettle();
         seen.add(tester.widget<DatasetText>(title).text);
+        await tester.tap(title);
+        await tester.pumpAndSettle();
         expect(
           find.text(displayDatasetText(career.aiImpactSummary)),
           findsOneWidget,
@@ -97,6 +99,10 @@ void main() {
           expect(find.text(displayDatasetText(task)), findsOneWidget);
         }
         checkWordingAndLayout(tester);
+        await tester.ensureVisible(title);
+        await tester.pumpAndSettle();
+        await tester.tap(title);
+        await tester.pumpAndSettle();
       }
       expect(seen, careers.map((c) => c.title).toList());
       await tester.scrollUntilVisible(
@@ -115,6 +121,68 @@ void main() {
       checkWordingAndLayout(tester);
     });
   }
+
+  testWidgets('pathways start closed and only one can be expanded', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: ResultsScreen(
+          result: resultForCode('RIA'),
+          stage: CareerStage.highSchool,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final careers = repository.careersFor('RIA');
+    final scrollable = find.byType(Scrollable).first;
+    Finder toggle(int index) =>
+        find.byKey(ValueKey('pathway-toggle-${careers[index].id}'));
+    Future<void> showToggle(int index) async {
+      await tester.scrollUntilVisible(
+        toggle(index),
+        400,
+        scrollable: scrollable,
+        maxScrolls: 100,
+      );
+      await tester.pumpAndSettle();
+    }
+
+    await showToggle(0);
+    expect(find.text('Why this fits you'), findsNothing);
+    expect(
+      tester
+          .widgetList<PathwayCard>(find.byType(PathwayCard))
+          .every((card) => !card.isExpanded),
+      isTrue,
+    );
+    await tester.tap(toggle(0));
+    await tester.pumpAndSettle();
+    expect(find.text('Why this fits you'), findsOneWidget);
+    await showToggle(1);
+    await tester.tap(toggle(1));
+    await tester.pumpAndSettle();
+    await showToggle(1);
+    expect(find.text('Why this fits you'), findsOneWidget);
+    expect(
+      tester
+          .widgetList<PathwayCard>(find.byType(PathwayCard))
+          .where((card) => card.isExpanded)
+          .map((card) => card.career.id),
+      [careers[1].id],
+    );
+    await tester.tap(toggle(1));
+    await tester.pumpAndSettle();
+    expect(find.text('Why this fits you'), findsNothing);
+    await showToggle(0);
+    expect(
+      tester
+          .widgetList<PathwayCard>(find.byType(PathwayCard))
+          .every((card) => !card.isExpanded),
+      isTrue,
+    );
+    checkWordingAndLayout(tester);
+  });
 
   testWidgets(
     'nearby code switches pathways without changing calculated scores',

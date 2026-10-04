@@ -32,6 +32,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
   late String _selectedCode;
   late CareerDataRepository _repository;
   late Future<void> _loading;
+  String? _expandedCareerId;
 
   @override
   void initState() {
@@ -40,6 +41,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
   }
 
   void _initialize() {
+    _expandedCareerId = null;
     _profile = ResultsViewModel.fromAssessment(
       widget.result,
       completionTime: widget.completionTime,
@@ -100,8 +102,10 @@ class _ResultsScreenState extends State<ResultsScreen> {
                             _UncertaintyBanner(
                               profile: _profile,
                               selectedCode: _selectedCode,
-                              onCodeSelected: (code) =>
-                                  setState(() => _selectedCode = code),
+                              onCodeSelected: (code) => setState(() {
+                                _selectedCode = code;
+                                _expandedCareerId = null;
+                              }),
                             ),
                           ],
                           const SizedBox(height: 28),
@@ -177,6 +181,14 @@ class _ResultsScreenState extends State<ResultsScreen> {
                               career: careers[index],
                               profile: _profile,
                               position: index + 1,
+                              isExpanded:
+                                  _expandedCareerId == careers[index].id,
+                              onToggle: () => setState(() {
+                                _expandedCareerId =
+                                    _expandedCareerId == careers[index].id
+                                    ? null
+                                    : careers[index].id;
+                              }),
                             ),
                           ),
                           childCount: careers.length,
