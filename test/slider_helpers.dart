@@ -10,7 +10,7 @@ Future<void> chooseSliderPosition(
   final slider = tester.widget<Slider>(finder);
   final rect = tester.getRect(finder);
   final fraction = (position - slider.min) / (slider.max - slider.min);
-  // Tap the six visible stops; Material sliders reserve 24px at each edge.
+  // Tap the five visible stops; Material sliders reserve 24px at each edge.
   await tester.tapAt(
     Offset(rect.left + 24 + (rect.width - 48) * fraction, rect.center.dy),
   );

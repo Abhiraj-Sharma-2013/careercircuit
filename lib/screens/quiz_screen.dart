@@ -145,12 +145,6 @@ class _QuizScreenState extends State<QuizScreen> {
                           padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                           child: Column(
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.only(bottom: 12),
-                                child: Text(
-                                  'Tap or move every slider—even for Never tried. Blinking means unanswered; solid means confirmed. Red to green: Not at all to Very much.',
-                                ),
-                              ),
                               for (final question in _questions)
                                 _ActivityCard(
                                   key: ValueKey(question.id),
@@ -286,12 +280,9 @@ class _ActivityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    final isUntried = response?.exposureGap ?? false;
-    final rated = response != null && !isUntried;
-    final value = (response?.sliderPosition ?? 0).toDouble();
-    final status = isUntried
-        ? QuizQuestion.neverTriedLabel
-        : rated
+    final rated = response != null;
+    final value = (response?.rating ?? 1).toDouble();
+    final status = rated
         ? QuizQuestion.responseLabels[response!.rating - 1]
         : 'Choose your answer';
     return Padding(
@@ -305,9 +296,7 @@ class _ActivityCard extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
               side: BorderSide(
-                color: rated || isUntried
-                    ? colors.primary
-                    : colors.outlineVariant,
+                color: rated ? colors.primary : colors.outlineVariant,
               ),
             ),
             child: Padding(
@@ -331,23 +320,21 @@ class _ActivityCard extends StatelessWidget {
           Semantics(
             label: '$text ${QuizQuestion.prompt}',
             hint: response == null
-                ? 'Choose an answer, or tap the circle to confirm Never tried.'
+                ? 'Choose an answer, or tap the circle to confirm Not at all.'
                 : 'Answer recorded',
             child: _AnswerSliderTheme(
               answered: response != null,
               child: Slider(
                 key: ValueKey('slider-${question.id}'),
                 value: value,
-                min: 0,
+                min: 1,
                 max: 5,
-                divisions: 5,
+                divisions: 4,
                 semanticFormatterCallback: (v) => response == null
                     ? 'Choose your answer'
-                    : QuizQuestion.sliderLabels[v.round()],
-                onChangeStart: (v) =>
-                    onChanged(QuizResponse.fromSliderPosition(v.round())),
-                onChanged: (v) =>
-                    onChanged(QuizResponse.fromSliderPosition(v.round())),
+                    : QuizQuestion.responseLabels[v.round() - 1],
+                onChangeStart: (v) => onChanged(QuizResponse.rated(v.round())),
+                onChanged: (v) => onChanged(QuizResponse.rated(v.round())),
               ),
             ),
           ),
@@ -362,7 +349,7 @@ class _ActivityCard extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Expanded(child: Text(QuizQuestion.neverTriedLabel)),
+                  const Expanded(child: Text('Not at all')),
                   Expanded(
                     flex: 2,
                     child: Text(
@@ -459,7 +446,7 @@ class _AnswerSliderThemeState extends State<_AnswerSliderTheme>
   }
 }
 
-/// Gray exposure stop, followed by the red-to-green enjoyment scale.
+/// The five enjoyment ratings, from red to green.
 class _InterestTrack extends RoundedRectSliderTrackShape {
   const _InterestTrack();
 
@@ -491,12 +478,8 @@ class _InterestTrack extends RoundedRectSliderTrackShape {
       end: textDirection == TextDirection.ltr
           ? Alignment.centerRight
           : Alignment.centerLeft,
-      // The gray stop is separate from the five enjoyment ratings.
-      stops: const [0, 0.08, 0.12, 0.2, 0.4, 0.6, 0.8, 1],
+      stops: const [0, 0.25, 0.5, 0.75, 1],
       colors: const [
-        Color(0xFF87919F),
-        Color(0xFF87919F),
-        Color(0xFF991B1B),
         Color(0xFF991B1B),
         Color(0xFFCA5C35),
         Color(0xFFE0BB60),

@@ -47,18 +47,18 @@ void main() {
     final initialColor = thumbColor();
     await tester.pump(const Duration(milliseconds: 400));
     expect(thumbColor(), isNot(initialColor));
-    expect(tester.widget<Slider>(slider).value, 0);
+    expect(tester.widget<Slider>(slider).value, 1);
     expect(find.text('Choose your answer'), findsNWidgets(5));
 
     await tester.ensureVisible(slider);
     final rect = tester.getRect(slider);
     await tester.tapAt(Offset(rect.left + 24, rect.center.dy));
     await tester.pump();
-    expect(tester.widget<Slider>(slider).value, 0);
+    expect(tester.widget<Slider>(slider).value, 1);
     expect(thumbColor(), colors.primary);
     expect(
       tester.widget<Text>(find.byKey(const ValueKey('status-R1'))).data,
-      'Never tried',
+      'Not at all',
     );
     expect(find.text('Choose your answer'), findsNWidgets(4));
     expect(
@@ -78,13 +78,20 @@ void main() {
     await start(tester);
     expect(find.text('Making'), findsOneWidget);
     expect(find.byType(Slider), findsNWidgets(5));
+    expect(find.text('Never tried'), findsNothing);
+    expect(find.textContaining('Tap or move every slider'), findsNothing);
+    for (final slider in tester.widgetList<Slider>(find.byType(Slider))) {
+      expect(slider.min, 1);
+      expect(slider.max, 5);
+      expect(slider.divisions, 4);
+    }
     expect(find.text('Choose your answer'), findsNWidgets(5));
     expect(
       tester.widget<FilledButton>(find.byKey(const ValueKey('next'))).onPressed,
       isNull,
     );
     for (var n = 1; n <= 5; n++) {
-      await chooseSliderPosition(tester, find.byKey(ValueKey('slider-R$n')), 0);
+      await chooseSliderPosition(tester, find.byKey(ValueKey('slider-R$n')), 1);
     }
     expect(
       tester
@@ -101,10 +108,10 @@ void main() {
     final slider = find.byKey(const ValueKey('slider-R1'));
     expect(
       tester.widget<Text>(find.byKey(const ValueKey('status-R1'))).data,
-      'Never tried',
+      'Not at all',
     );
     await chooseSliderPosition(tester, slider, 1);
-    expect(find.text('Not at all'), findsOneWidget);
+    expect(find.text('Not at all'), findsWidgets);
     await chooseSliderPosition(tester, slider, 2);
     expect(find.text('Probably not'), findsOneWidget);
     await chooseSliderPosition(tester, slider, 3);
@@ -119,10 +126,10 @@ void main() {
     await tester.pumpAndSettle();
     expect(tester.widget<Slider>(slider).value, 5);
     expect(find.text('5 = Very much'), findsNothing);
-    await chooseSliderPosition(tester, slider, 0);
+    await chooseSliderPosition(tester, slider, 1);
     expect(
       tester.widget<Text>(find.byKey(const ValueKey('status-R1'))).data,
-      'Never tried',
+      'Not at all',
     );
     expect(tester.takeException(), isNull);
   });
@@ -145,15 +152,15 @@ void main() {
         await chooseSliderPosition(
           tester,
           find.byKey(ValueKey('slider-${q.id}')),
-          0,
+          1,
         );
       }
       await tapVisible(tester, find.byKey(const ValueKey('next')));
       expect(tester.takeException(), isNull);
     }
     final screen = tester.widget<ResultsScreen>(find.byType(ResultsScreen));
-    expect(screen.result.scores.values, everyElement(15));
-    expect(screen.result.exposureGapCount, 30);
+    expect(screen.result.scores.values, everyElement(5));
+    expect(screen.result.exposureGapCount, 0);
     expect(screen.completionTime, isNotNull);
     await tester.scrollUntilVisible(
       find.textContaining('Your interests are still forming'),

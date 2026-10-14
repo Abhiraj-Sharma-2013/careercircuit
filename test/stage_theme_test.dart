@@ -64,13 +64,13 @@ void main() {
       await chooseSliderPosition(
         tester,
         find.byKey(const ValueKey('slider-R1')),
-        0,
+        1,
       );
       await tap(tester, toggle);
       expect(tester.widget<Switch>(toggle).value, initial);
       expect(
         tester.widget<Text>(find.byKey(const ValueKey('status-R1'))).data,
-        'Never tried',
+        'Not at all',
       );
       await tap(tester, find.byType(BackButton));
       await tap(tester, find.byKey(const ValueKey('stage-middleSchool')));
@@ -116,7 +116,7 @@ void main() {
           await chooseSliderPosition(
             tester,
             find.byKey(ValueKey('slider-${q.id}')),
-            0,
+            1,
           );
         }
         await tap(tester, find.byKey(const ValueKey('next')));

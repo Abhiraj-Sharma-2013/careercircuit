@@ -5,7 +5,7 @@ CareerCircuit is a privacy-first Flutter career-exploration app. Results come fr
 ## Assessment and results
 
 - 30 activity ratings, five per RIASEC category, on six compact pages.
-- Six slider positions: gray Never tried, then five enjoyment ratings. Never tried stores rating 3 and a separate exposure flag; an untouched slider remains unanswered.
+- Five slider positions run from red (Not at all) to green (Very much). An untouched slider remains unanswered; tap or move it to confirm a rating.
 - Local scoring is unchanged: sum five ratings per category (5 to 25). Results display raw / 25 * 100 as reported **interest level**, never ability or a success probability.
 - Rank raw totals using RIASEC order for exact ties. Close first/second and third/fourth totals produce alternate codes without changing responses or scores.
 - Uncertainty checks cover broad profiles, over 40% untried items, 80% repeated ratings, and completion under 90 seconds. These are supportive UI heuristics, not validated confidence estimates.
