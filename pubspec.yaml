@@ -1,5 +1,5 @@
 name: careercircuit
-description: "A new Flutter project."
+description: "Explore your interests and discover career pathways with CareerCircuit."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -20,6 +20,7 @@ version: 1.0.0+1
 
 environment:
   sdk: ^3.12.2
+  flutter: 3.44.2
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -34,6 +35,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
@@ -49,6 +51,11 @@ dev_dependencies:
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
+flutter_launcher_icons:
+  android: true
+  iOS: true
+  image_path: "assets/career_circuit_logo.png"
+
 # The following section is specific to Flutter packages.
 flutter:
 
@@ -56,6 +63,8 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - assets/career_dataset.json
 
   # To add assets to your application, add an assets section, like this:
   # assets:

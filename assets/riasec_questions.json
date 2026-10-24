@@ -1,0 +1,272 @@
+[
+  {
+    "id": "R1",
+    "riasecType": "R",
+    "text": "Put together a small shelf using separate parts.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "R2",
+    "riasecType": "R",
+    "text": "Repair a drawer that keeps getting stuck.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "R3",
+    "riasecType": "R",
+    "text": "Use a screwdriver to tighten a loose handle.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "R4",
+    "riasecType": "R",
+    "text": "Prepare the soil for an outdoor garden.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "R5",
+    "riasecType": "R",
+    "text": "Shape clay into a cup or bowl.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "I1",
+    "riasecType": "I",
+    "text": "Research a science question you are curious about.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "I2",
+    "riasecType": "I",
+    "text": "Look for patterns in the results of a survey.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "I3",
+    "riasecType": "I",
+    "text": "Test whether plants grow differently with more light.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "I4",
+    "riasecType": "I",
+    "text": "Use clues to find out why a flashlight stopped working.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "I5",
+    "riasecType": "I",
+    "text": "Solve a puzzle by finding the right order of steps.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "A1",
+    "riasecType": "A",
+    "text": "Design the cover of a book or magazine.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "A2",
+    "riasecType": "A",
+    "text": "Write a short story with characters you invent.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "A3",
+    "riasecType": "A",
+    "text": "Act out a scene from a story.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "A4",
+    "riasecType": "A",
+    "text": "Invent a game with your own rules.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "A5",
+    "riasecType": "A",
+    "text": "Draw a comic that helps explain an idea.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "S1",
+    "riasecType": "S",
+    "text": "Explain a new task to someone learning it.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "S2",
+    "riasecType": "S",
+    "text": "Listen while someone talks through a problem.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "S3",
+    "riasecType": "S",
+    "text": "Coach someone as they practice a new skill.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "S4",
+    "riasecType": "S",
+    "text": "Hand out supplies at a community donation event.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "S5",
+    "riasecType": "S",
+    "text": "Team up with others to help a new student feel welcome.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "E1",
+    "riasecType": "E",
+    "text": "Lead a team working on a group project.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "E2",
+    "riasecType": "E",
+    "text": "Give reasons why a group should try your idea.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "E3",
+    "riasecType": "E",
+    "text": "Start a small event that others can join.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "E4",
+    "riasecType": "E",
+    "text": "Decide which idea a team should work on first.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "E5",
+    "riasecType": "E",
+    "text": "Sell a product at a small market stand.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "C1",
+    "riasecType": "C",
+    "text": "Set dates for each step of a group project.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "C2",
+    "riasecType": "C",
+    "text": "Sort project notes into clearly labeled groups.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "C3",
+    "riasecType": "C",
+    "text": "Check a list for missing or repeated items.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "C4",
+    "riasecType": "C",
+    "text": "Track how many supplies are left after each use.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  },
+  {
+    "id": "C5",
+    "riasecType": "C",
+    "text": "Follow a checklist to set up for an activity.",
+    "scaleMin": 1,
+    "scaleMax": 5,
+    "hasNotTriedOption": true,
+    "exposureGapNeutralScore": 3
+  }
+]

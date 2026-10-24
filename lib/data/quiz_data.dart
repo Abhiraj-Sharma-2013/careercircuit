@@ -1,143 +1,164 @@
 import '../models/quiz_question.dart';
 
-const List<QuizQuestion> quizQuestions = [
-  QuizQuestion(
-    id: 'discovery_1',
-    questionText: 'What kind of challenge sounds most exciting?',
-    answers: [
-      QuizAnswer(
-        text: 'Solving a mystery',
-        scores: {'Thinker': 2, 'TechAdapter': 1},
-      ),
-      QuizAnswer(
-        text: 'Helping someone',
-        scores: {'Helper': 2, 'Education': 1, 'Healthcare': 1},
-      ),
-      QuizAnswer(
-        text: 'Building something',
-        scores: {'Builder': 2, 'Engineering': 2},
-      ),
-      QuizAnswer(
-        text: 'Creating something beautiful',
-        scores: {'Creator': 2, 'Design': 2},
-      ),
-    ],
-  ),
+// Custom item bank: requires pilot testing and expert review.
+const quizSections = <String, String>{
+  'R': 'Making',
+  'I': 'Exploring',
+  'A': 'Creating',
+  'S': 'Helping',
+  'E': 'Leading',
+  'C': 'Organizing',
+};
 
+const quizQuestions = <QuizQuestion>[
   QuizQuestion(
-    id: 'discovery_2',
-    questionText: 'Which school subject do you enjoy most?',
-    answers: [
-      QuizAnswer(
-        text: 'Math',
-        scores: {'Thinker': 2, 'Data': 1, 'Engineering': 1},
-      ),
-      QuizAnswer(
-        text: 'Science',
-        scores: {
-          'Thinker': 1,
-          'Healthcare': 1,
-          'Environment': 1,
-          'Engineering': 1,
-        },
-      ),
-      QuizAnswer(text: 'Art', scores: {'Creator': 2, 'Design': 2}),
-      QuizAnswer(
-        text: 'Computer Science',
-        scores: {'TechAdapter': 2, 'Software': 2, 'Cybersecurity': 1},
-      ),
-    ],
+    id: "R1",
+    riasecType: "R",
+    text: "Put together a small shelf using separate parts.",
   ),
-
   QuizQuestion(
-    id: 'discovery_3',
-    questionText: 'What type of project sounds most fun?',
-    answers: [
-      QuizAnswer(
-        text: 'Build an app or game',
-        scores: {'Software': 3, 'TechAdapter': 2, 'Creator': 1},
-      ),
-      QuizAnswer(
-        text: 'Protect people from online hackers',
-        scores: {'Cybersecurity': 3, 'Thinker': 2, 'Helper': 1},
-      ),
-      QuizAnswer(
-        text: 'Design a poster, logo, or app screen',
-        scores: {'Design': 3, 'Creator': 2},
-      ),
-      QuizAnswer(
-        text: 'Help younger students learn',
-        scores: {'Teaching': 3, 'Helper': 2, 'Leader': 1},
-      ),
-    ],
+    id: "R2",
+    riasecType: "R",
+    text: "Repair a drawer that keeps getting stuck.",
   ),
-
   QuizQuestion(
-    id: 'probe_tech_1',
-    questionText: 'When using technology, what problem would you rather solve?',
-    answers: [
-      QuizAnswer(
-        text: 'Make apps easier to use',
-        scores: {'Design': 2, 'TechAdapter': 1, 'Helper': 1},
-      ),
-      QuizAnswer(
-        text: 'Find patterns in data',
-        scores: {'Data': 3, 'Thinker': 2},
-      ),
-      QuizAnswer(
-        text: 'Stop cyber attacks',
-        scores: {'Cybersecurity': 3, 'Thinker': 1, 'TechAdapter': 1},
-      ),
-      QuizAnswer(
-        text: 'Build smart robots',
-        scores: {'Engineering': 3, 'Builder': 2, 'TechAdapter': 1},
-      ),
-    ],
+    id: "R3",
+    riasecType: "R",
+    text: "Use a screwdriver to tighten a loose handle.",
   ),
-
   QuizQuestion(
-    id: 'probe_work_style_1',
-    questionText: 'How do you like to work?',
-    answers: [
-      QuizAnswer(
-        text: 'Quietly focusing on a hard problem',
-        scores: {'Thinker': 2, 'Software': 1, 'Data': 1},
-      ),
-      QuizAnswer(
-        text: 'Working with a team',
-        scores: {'Helper': 1, 'Leader': 1, 'Business': 1},
-      ),
-      QuizAnswer(
-        text: 'Creating and improving ideas',
-        scores: {'Creator': 2, 'Design': 1, 'Business': 1},
-      ),
-      QuizAnswer(
-        text: 'Doing hands-on building',
-        scores: {'Builder': 2, 'Engineering': 2},
-      ),
-    ],
+    id: "R4",
+    riasecType: "R",
+    text: "Prepare the soil for an outdoor garden.",
   ),
-
   QuizQuestion(
-    id: 'ai_future_1',
-    questionText: 'Which future skill sounds most interesting to learn?',
-    answers: [
-      QuizAnswer(
-        text: 'Using AI to build apps',
-        scores: {'Software': 2, 'TechAdapter': 2},
-      ),
-      QuizAnswer(
-        text: 'Using AI to protect data',
-        scores: {'Cybersecurity': 2, 'TechAdapter': 2},
-      ),
-      QuizAnswer(
-        text: 'Using AI to understand health or science',
-        scores: {'Healthcare': 2, 'Data': 1, 'Thinker': 1},
-      ),
-      QuizAnswer(
-        text: 'Using AI to design creative projects',
-        scores: {'Design': 2, 'Creator': 2},
-      ),
-    ],
+    id: "R5",
+    riasecType: "R",
+    text: "Shape clay into a cup or bowl.",
+  ),
+  QuizQuestion(
+    id: "I1",
+    riasecType: "I",
+    text: "Research a science question you are curious about.",
+  ),
+  QuizQuestion(
+    id: "I2",
+    riasecType: "I",
+    text: "Look for patterns in the results of a survey.",
+  ),
+  QuizQuestion(
+    id: "I3",
+    riasecType: "I",
+    text: "Test whether plants grow differently with more light.",
+  ),
+  QuizQuestion(
+    id: "I4",
+    riasecType: "I",
+    text: "Use clues to find out why a flashlight stopped working.",
+  ),
+  QuizQuestion(
+    id: "I5",
+    riasecType: "I",
+    text: "Solve a puzzle by finding the right order of steps.",
+  ),
+  QuizQuestion(
+    id: "A1",
+    riasecType: "A",
+    text: "Design the cover of a book or magazine.",
+  ),
+  QuizQuestion(
+    id: "A2",
+    riasecType: "A",
+    text: "Write a short story with characters you invent.",
+  ),
+  QuizQuestion(
+    id: "A3",
+    riasecType: "A",
+    text: "Act out a scene from a story.",
+  ),
+  QuizQuestion(
+    id: "A4",
+    riasecType: "A",
+    text: "Invent a game with your own rules.",
+  ),
+  QuizQuestion(
+    id: "A5",
+    riasecType: "A",
+    text: "Draw a comic that helps explain an idea.",
+  ),
+  QuizQuestion(
+    id: "S1",
+    riasecType: "S",
+    text: "Explain a new task to someone learning it.",
+  ),
+  QuizQuestion(
+    id: "S2",
+    riasecType: "S",
+    text: "Listen while someone talks through a problem.",
+  ),
+  QuizQuestion(
+    id: "S3",
+    riasecType: "S",
+    text: "Coach someone as they practice a new skill.",
+  ),
+  QuizQuestion(
+    id: "S4",
+    riasecType: "S",
+    text: "Hand out supplies at a community donation event.",
+  ),
+  QuizQuestion(
+    id: "S5",
+    riasecType: "S",
+    text: "Team up with others to help a new student feel welcome.",
+  ),
+  QuizQuestion(
+    id: "E1",
+    riasecType: "E",
+    text: "Lead a team working on a group project.",
+  ),
+  QuizQuestion(
+    id: "E2",
+    riasecType: "E",
+    text: "Give reasons why a group should try your idea.",
+  ),
+  QuizQuestion(
+    id: "E3",
+    riasecType: "E",
+    text: "Start a small event that others can join.",
+  ),
+  QuizQuestion(
+    id: "E4",
+    riasecType: "E",
+    text: "Decide which idea a team should work on first.",
+  ),
+  QuizQuestion(
+    id: "E5",
+    riasecType: "E",
+    text: "Sell a product at a small market stand.",
+  ),
+  QuizQuestion(
+    id: "C1",
+    riasecType: "C",
+    text: "Set dates for each step of a group project.",
+  ),
+  QuizQuestion(
+    id: "C2",
+    riasecType: "C",
+    text: "Sort project notes into clearly labeled groups.",
+  ),
+  QuizQuestion(
+    id: "C3",
+    riasecType: "C",
+    text: "Check a list for missing or repeated items.",
+  ),
+  QuizQuestion(
+    id: "C4",
+    riasecType: "C",
+    text: "Track how many supplies are left after each use.",
+  ),
+  QuizQuestion(
+    id: "C5",
+    riasecType: "C",
+    text: "Follow a checklist to set up for an activity.",
   ),
 ];
